@@ -7,6 +7,7 @@ import {
   ImageBackground,
 } from "react-native";
 import React from "react";
+import Word from "../components/Word";
 
 const Search = () => {
   return (
@@ -29,6 +30,7 @@ const Search = () => {
           </TouchableOpacity>
         </View>
 
+        <Word />
       </View>
     </ImageBackground>
   );
@@ -52,7 +54,8 @@ const styles = StyleSheet.create({
   searchInputContainer: {
     flexDirection: "row",
     alignItems: "stretch",
-    marginBottom: 20,
+    marginBottom: 10,
+    minWidth: 250
   },
   searchInput: {
     borderWidth: 2,
@@ -60,10 +63,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingVertical: 10,
     paddingHorizontal: 20,
-    fontSize: 20,
+    fontSize: 18,
     flex: 1,
     boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.5) inset',
-    color: '#0b2057'
+    color: '#0b2057',
   },
   searchButton: {
     justifyContent: 'center',
