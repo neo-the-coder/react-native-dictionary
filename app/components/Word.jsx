@@ -4,13 +4,44 @@ import {
   Text,
   View,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import AdditionalText from "./AdditionalText";
+import { Audio } from "expo-av";
 import words from "../data.json";
 
 const Word = () => {
+  const [sound, setSound] = useState();
+  const [error, setError] = useState();
+  const [isSoundLoading, setIsSoundLoading] = useState({});
+
+  const pronounce = async (uri) => {
+    setIsSoundLoading((prev) => ({ ...prev, [uri]: true }));
+    try {
+      const { sound } = await Audio.Sound.createAsync(
+        { uri },
+        { shouldPlay: true }
+      );
+      setSound(sound);
+      await sound.playAsync();
+    } catch (error) {
+      setError(error);
+      console.log("Error occured:", error);
+    } finally {
+      setIsSoundLoading((prev) => ({ ...prev, [uri]: false }));
+    }
+  };
+
+  useEffect(() => {
+    return sound
+      ? () => {
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
+
   return (
     <ScrollView>
       {words.map((word, wordIndex, words) => {
@@ -33,25 +64,37 @@ const Word = () => {
                 </View>
 
                 {index === 0 && (
-                  <View style={styles.phoneticsContainer}>
-                    {word.phonetics.map((phonetic, index) => (
-                      <View style={styles.phoneticContainer} key={index}>
-                        <Text style={styles.phoneticText}>{phonetic.text}</Text>
-                        {/* input phonetic.audio url to a play function */}
+                  <>
+                    <View style={styles.phoneticsContainer}>
+                      {word.phonetics.map((phonetic, index) => (
+                        <View style={styles.phoneticContainer} key={index}>
+                          <Text style={styles.phoneticText}>
+                            {phonetic.text}
+                          </Text>
+                          {!isSoundLoading[phonetic.audio] ? (
+                            <TouchableOpacity
+                              style={styles.playButton}
+                              onPress={() => pronounce(phonetic.audio)}
+                            >
+                              <FontAwesome5
+                                name="volume-up"
+                                size={20}
+                                color="black"
+                              />
+                            </TouchableOpacity>
+                          ) : (
+                            <ActivityIndicator size={20} color="#0b2057" />
+                          )}
+                        </View>
+                      ))}
+                    </View>
 
-                        <TouchableOpacity
-                          style={styles.playButton}
-                          onPress={() => {}}
-                        >
-                          <FontAwesome5
-                            name="volume-up"
-                            size={20}
-                            color="black"
-                          />
-                        </TouchableOpacity>
-                      </View>
-                    ))}
-                  </View>
+                    {error && (
+                      <Text style={styles.error}>
+                        Sound could not be loaded. Please try again later.
+                      </Text>
+                    )}
+                  </>
                 )}
 
                 {meaning.synonyms.length > 0 && (
@@ -85,12 +128,15 @@ const Word = () => {
                     </View>
                   ))}
                 </View>
+
                 {index !== meanings.length - 1 && (
                   <View style={styles.divider} />
                 )}
               </React.Fragment>
             ))}
-            {wordIndex !== words.length - 1 && <View style={[styles.divider, styles.wordDivider]} />}
+            {wordIndex !== words.length - 1 && (
+              <View style={[styles.divider, styles.wordDivider]} />
+            )}
           </View>
         );
       })}
@@ -102,6 +148,16 @@ export default Word;
 
 const styles = StyleSheet.create({
   container: {},
+  error: {
+    color: "red",
+    backgroundColor: "#00000011",
+    fontWeight: "bold",
+    paddingVertical: 3,
+    paddingHorizontal: 3,
+    marginTop: 5,
+    borderRadius: 5,
+    alignSelf: "flex-start",
+  },
   divider: {
     height: 10.8,
     marginHorizontal: 5,
