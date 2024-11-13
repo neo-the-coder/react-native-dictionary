@@ -10,15 +10,15 @@ import React, { useEffect, useState } from "react";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import AdditionalText from "./AdditionalText";
 import { Audio } from "expo-av";
-import words from "../data.json";
 
-const Word = () => {
+const Word = ({words, setWordToSearch}) => {
   const [sound, setSound] = useState();
   const [error, setError] = useState();
   const [isSoundLoading, setIsSoundLoading] = useState({});
 
   const pronounce = async (uri) => {
     setIsSoundLoading((prev) => ({ ...prev, [uri]: true }));
+    setError(null)
     try {
       const { sound } = await Audio.Sound.createAsync(
         { uri },
@@ -98,11 +98,11 @@ const Word = () => {
                 )}
 
                 {meaning.synonyms.length > 0 && (
-                  <AdditionalText title="Synonyms" texts={meaning.synonyms} />
+                  <AdditionalText title="Synonyms" texts={meaning.synonyms} uniqueKey={word.word + index} setWordToSearch={setWordToSearch} />
                 )}
 
                 {meaning.antonyms.length > 0 && (
-                  <AdditionalText title="Antonyms" texts={meaning.antonyms} />
+                  <AdditionalText title="Antonyms" texts={meaning.antonyms} uniqueKey={word.word + index} setWordToSearch={setWordToSearch} />
                 )}
 
                 <View style={styles.definitionsContainer}>
@@ -116,6 +116,8 @@ const Word = () => {
                         <AdditionalText
                           title="Synonyms"
                           texts={definition.synonyms}
+                          uniqueKey={index}
+                          setWordToSearch={setWordToSearch}
                         />
                       )}
 
@@ -123,6 +125,8 @@ const Word = () => {
                         <AdditionalText
                           title="Antonyms"
                           texts={definition.antonyms}
+                          uniqueKey={index}
+                          setWordToSearch={setWordToSearch}
                         />
                       )}
                     </View>
@@ -150,7 +154,7 @@ const styles = StyleSheet.create({
   container: {},
   error: {
     color: "red",
-    backgroundColor: "#00000011",
+    backgroundColor: "#68330a11",
     fontWeight: "bold",
     paddingVertical: 3,
     paddingHorizontal: 3,

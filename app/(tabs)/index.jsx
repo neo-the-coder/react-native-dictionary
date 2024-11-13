@@ -6,10 +6,19 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
-import React from "react";
-import Word from "../components/Word";
+import React, { useState } from "react";
+import WordFetcher from "../components/WordFetcher";
 
 const Search = () => {
+  const [searchedWord, setSearchedWord] = useState('');
+  const [inputText, setInputText] = useState('');
+
+  const handleSearch = () => {
+    const trimmed = inputText.trim()
+    if (trimmed === '') return
+    setSearchedWord(trimmed)
+  }
+
   return (
     <ImageBackground
       source={require("../../assets/bg_paper.png")}
@@ -24,13 +33,16 @@ const Search = () => {
             style={styles.searchInput}
             placeholder="Search a word"
             placeholderTextColor="#68330a"
+            value={inputText}
+            onChangeText={setInputText}
           />
-          <TouchableOpacity style={styles.searchButton} onPress={() => {}}>
+
+          <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
             <Text style={styles.searchButtonText}>Search</Text>
           </TouchableOpacity>
         </View>
 
-        <Word />
+        {searchedWord && <WordFetcher searchedWord={searchedWord} />}
       </View>
     </ImageBackground>
   );

@@ -1,12 +1,12 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 
-const AdditionalText = ({ title, texts }) => {
+const AdditionalText = ({ title, texts, uniqueKey, setWordToSearch }) => {
   return (
     <View style={styles.additionalsContainer}>
       <Text style={styles.additionalTitle}>{title}</Text>
-      {texts.map((text) => (
-        <TouchableOpacity key={text}>
+      {texts.map((text, index) => (
+        <TouchableOpacity key={`${uniqueKey}.${text}.${index}`} onPress={() => setWordToSearch(text)}>
           <Text style={styles.additionalText}>{text}</Text>
         </TouchableOpacity>
       ))}

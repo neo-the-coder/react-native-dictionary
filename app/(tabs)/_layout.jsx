@@ -5,6 +5,8 @@ import { ImageBackground } from "react-native";
 export default function TabLayout() {
   return (
     <Tabs
+      backBehavior="initialRoute"
+      initialRouteName="index"
       screenOptions={{
         tabBarActiveTintColor: "#e5e5e5",
         tabBarInactiveTintColor: "#8e8e8e",
