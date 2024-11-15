@@ -6,7 +6,10 @@ const AdditionalText = ({ title, texts, uniqueKey, setWordToSearch }) => {
     <View style={styles.additionalsContainer}>
       <Text style={styles.additionalTitle}>{title}</Text>
       {texts.map((text, index) => (
-        <TouchableOpacity key={`${uniqueKey}.${text}.${index}`} onPress={() => setWordToSearch(text)}>
+        <TouchableOpacity
+          key={`${uniqueKey}.${text}.${index}`}
+          onPress={() => setWordToSearch(text)}
+        >
           <Text style={styles.additionalText}>{text}</Text>
         </TouchableOpacity>
       ))}
@@ -31,9 +34,9 @@ const styles = StyleSheet.create({
   },
   additionalText: {
     backgroundColor: "#0b2057",
-    color: "#f4dfa8",
+    color: "#efedff",
     fontSize: 18,
-    paddingHorizontal: 4,
+    paddingHorizontal: 6,
     paddingVertical: 2,
     borderRadius: 5,
   },

@@ -8,10 +8,17 @@ export default function TabLayout() {
       backBehavior="initialRoute"
       initialRouteName="index"
       screenOptions={{
+        headerTitleAlign: "center",
+        headerStyle: {
+          backgroundColor: "#efedff",
+          borderBottomColor: "#8e8e8e",
+          borderBottomWidth: 1,
+        },
         tabBarActiveTintColor: "#e5e5e5",
-        tabBarInactiveTintColor: "#8e8e8e",
         tabBarActiveBackgroundColor: "#0b2057",
-        headerShown: false,
+        tabBarInactiveTintColor: "#8e8e8e",
+        tabBarInactiveBackgroundColor: "#efedff",
+        tabBarStyle: { borderTopColor: "#0b2057" },
       }}
     >
       <Tabs.Screen
@@ -26,7 +33,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Search",
+          title: "Search Dictionary",
+          tabBarLabel: "Search",
           tabBarIcon: ({ color }) => <TabBarIcon name="book" color={color} />,
         }}
       />

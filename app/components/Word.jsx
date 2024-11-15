@@ -11,14 +11,14 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import AdditionalText from "./AdditionalText";
 import { Audio } from "expo-av";
 
-const Word = ({words, setWordToSearch}) => {
+const Word = ({ words, setWordToSearch }) => {
   const [sound, setSound] = useState();
   const [error, setError] = useState();
   const [isSoundLoading, setIsSoundLoading] = useState({});
 
   const pronounce = async (uri) => {
     setIsSoundLoading((prev) => ({ ...prev, [uri]: true }));
-    setError(null)
+    setError(null);
     try {
       const { sound } = await Audio.Sound.createAsync(
         { uri },
@@ -49,7 +49,12 @@ const Word = ({words, setWordToSearch}) => {
           <View key={wordIndex} style={styles.container}>
             {word.meanings.map((meaning, index, meanings) => (
               <React.Fragment key={index}>
-                <View style={styles.wordContainer}>
+                <View
+                  style={[
+                    styles.wordContainer,
+                    index === 0 && words.length > 1 ? styles.addMargin : null,
+                  ]}
+                >
                   <Text style={styles.word}>{word.word}</Text>
 
                   {index === 0 && words.length > 1 && (
@@ -89,7 +94,7 @@ const Word = ({words, setWordToSearch}) => {
                       ))}
                     </View>
 
-                    {error && (
+                    {word.phonetics.length > 0 && error && (
                       <Text style={styles.error}>
                         Sound could not be loaded. Please try again later.
                       </Text>
@@ -98,11 +103,21 @@ const Word = ({words, setWordToSearch}) => {
                 )}
 
                 {meaning.synonyms.length > 0 && (
-                  <AdditionalText title="Synonyms" texts={meaning.synonyms} uniqueKey={word.word + index} setWordToSearch={setWordToSearch} />
+                  <AdditionalText
+                    title="Synonyms"
+                    texts={meaning.synonyms}
+                    uniqueKey={word.word + index}
+                    setWordToSearch={setWordToSearch}
+                  />
                 )}
 
                 {meaning.antonyms.length > 0 && (
-                  <AdditionalText title="Antonyms" texts={meaning.antonyms} uniqueKey={word.word + index} setWordToSearch={setWordToSearch} />
+                  <AdditionalText
+                    title="Antonyms"
+                    texts={meaning.antonyms}
+                    uniqueKey={word.word + index}
+                    setWordToSearch={setWordToSearch}
+                  />
                 )}
 
                 <View style={styles.definitionsContainer}>
@@ -154,10 +169,10 @@ const styles = StyleSheet.create({
   container: {},
   error: {
     color: "red",
-    backgroundColor: "#68330a11",
+    backgroundColor: "#44377722",
     fontWeight: "bold",
     paddingVertical: 3,
-    paddingHorizontal: 3,
+    paddingHorizontal: 6,
     marginTop: 5,
     borderRadius: 5,
     alignSelf: "flex-start",
@@ -179,19 +194,21 @@ const styles = StyleSheet.create({
     columnGap: 10,
     marginTop: 10,
   },
+  addMargin: {
+    marginTop: 20,
+  },
   word: {
     color: "#0b2057",
     fontSize: 24,
     fontWeight: "bold",
   },
   wordMeanings: {
-    backgroundColor: "#68330a",
-    color: "#e8c88f",
+    backgroundColor: "#443777",
+    color: "#efedff",
     fontSize: 20,
     borderRadius: 8,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    marginTop: 10,
   },
   partOfSpeech: {
     fontStyle: "italic",

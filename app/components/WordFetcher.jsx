@@ -54,7 +54,7 @@ export default WordFetcher;
 const styles = StyleSheet.create({
   error: {
     color: "red",
-    backgroundColor: "#68330a11",
+    backgroundColor: "#44377722",
     fontSize: 20,
     lineHeight: 28,
     fontWeight: "bold",
