@@ -46,7 +46,7 @@ const WordFetcher = ({ searchedWord }) => {
 
   if (error) return <Text style={styles.error}>{error}</Text>;
 
-  return <Word words={words} setWordToSearch={setWordToSearch} />;
+  return <Word words={words} />;
 };
 
 export default WordFetcher;
@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#44377722",
     fontSize: 20,
     lineHeight: 28,
-    fontWeight: "bold",
     paddingVertical: 5,
     paddingHorizontal: 10,
     marginTop: 20,

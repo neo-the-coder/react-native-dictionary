@@ -11,7 +11,7 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import AdditionalText from "./AdditionalText";
 import { Audio } from "expo-av";
 
-const Word = ({ words, setWordToSearch }) => {
+const Word = ({ words }) => {
   const [sound, setSound] = useState();
   const [error, setError] = useState();
   const [isSoundLoading, setIsSoundLoading] = useState({});
@@ -107,7 +107,6 @@ const Word = ({ words, setWordToSearch }) => {
                     title="Synonyms"
                     texts={meaning.synonyms}
                     uniqueKey={word.word + index}
-                    setWordToSearch={setWordToSearch}
                   />
                 )}
 
@@ -116,7 +115,6 @@ const Word = ({ words, setWordToSearch }) => {
                     title="Antonyms"
                     texts={meaning.antonyms}
                     uniqueKey={word.word + index}
-                    setWordToSearch={setWordToSearch}
                   />
                 )}
 
@@ -132,7 +130,6 @@ const Word = ({ words, setWordToSearch }) => {
                           title="Synonyms"
                           texts={definition.synonyms}
                           uniqueKey={index}
-                          setWordToSearch={setWordToSearch}
                         />
                       )}
 
@@ -141,7 +138,6 @@ const Word = ({ words, setWordToSearch }) => {
                           title="Antonyms"
                           texts={definition.antonyms}
                           uniqueKey={index}
-                          setWordToSearch={setWordToSearch}
                         />
                       )}
                     </View>

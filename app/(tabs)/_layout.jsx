@@ -1,6 +1,5 @@
 import { Tabs } from "expo-router";
 import { TabBarIcon } from "../components/TabBarIcon";
-import { ImageBackground } from "react-native";
 
 export default function TabLayout() {
   return (
@@ -13,6 +12,8 @@ export default function TabLayout() {
           backgroundColor: "#efedff",
           borderBottomColor: "#8e8e8e",
           borderBottomWidth: 1,
+          boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.1)",
+          elevation: 3,
         },
         tabBarActiveTintColor: "#e5e5e5",
         tabBarActiveBackgroundColor: "#0b2057",

@@ -25,8 +25,10 @@ const Search = () => {
           style={styles.searchInput}
           placeholder="Search a word"
           placeholderTextColor="#443777"
+          returnKeyType="search"
           value={inputText}
           onChangeText={setInputText}
+          onSubmitEditing={handleSearch}
         />
 
         <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>

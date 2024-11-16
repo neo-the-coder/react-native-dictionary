@@ -1,17 +1,22 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { Link } from "expo-router";
 
-const AdditionalText = ({ title, texts, uniqueKey, setWordToSearch }) => {
+const AdditionalText = ({ title, texts, uniqueKey }) => {
   return (
     <View style={styles.additionalsContainer}>
       <Text style={styles.additionalTitle}>{title}</Text>
       {texts.map((text, index) => (
-        <TouchableOpacity
+        <Link
           key={`${uniqueKey}.${text}.${index}`}
-          onPress={() => setWordToSearch(text)}
+          href={{
+            pathname: "details",
+            params: {searchedWord: text}
+          }}
+          push
+          style={styles.additionalText}
         >
-          <Text style={styles.additionalText}>{text}</Text>
-        </TouchableOpacity>
+          {text}
+        </Link>
       ))}
     </View>
   );
