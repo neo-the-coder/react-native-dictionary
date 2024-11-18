@@ -10,11 +10,37 @@ import React, { useEffect, useState } from "react";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import AdditionalText from "./AdditionalText";
 import { Audio } from "expo-av";
+import { useNavigation } from "expo-router";
+import { HeaderFavButton } from "./HeaderFavButton";
+import Toast from "react-native-root-toast";
 
 const Word = ({ words }) => {
   const [sound, setSound] = useState();
   const [error, setError] = useState();
   const [isSoundLoading, setIsSoundLoading] = useState({});
+  const [isFav, setIsFav] = useState(words.isFav)
+
+  const navigation = useNavigation();
+
+  const handleFav = () => {
+    const toastOptions = {
+      duration: 1000,
+      position: Toast.positions.BOTTOM,
+      delay: 0,
+      shadow: true,
+      animation: true,
+      hideOnPress: true,
+      backgroundColor: "#443777",
+      textColor: "#efedff",
+      opacity: 1,
+    };
+    const toastMsg = !isFav
+      ? `"${words[0].word}" added to Favorites!`
+      : `"${words[0].word}" removed from Favorites!`;
+    
+    Toast.show(toastMsg, toastOptions);
+    setIsFav((isFav) => !isFav);
+  };
 
   const pronounce = async (uri) => {
     setIsSoundLoading((prev) => ({ ...prev, [uri]: true }));
@@ -41,6 +67,14 @@ const Word = ({ words }) => {
         }
       : undefined;
   }, [sound]);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (        
+        <HeaderFavButton name={isFav ? "star" : "star-o"} onPress={handleFav} />
+      ),
+    });
+  }, [navigation, isFav])
 
   return (
     <ScrollView>

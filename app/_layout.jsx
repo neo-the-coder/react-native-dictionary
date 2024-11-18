@@ -1,6 +1,7 @@
 import { useGlobalSearchParams } from "expo-router";
 import { Stack } from "expo-router/stack";
 import { SafeAreaView } from "react-native";
+import { RootSiblingParent } from 'react-native-root-siblings';
 
 export default function Layout() {
   let { searchedWord = "word definition" } = useGlobalSearchParams();
@@ -8,6 +9,7 @@ export default function Layout() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <RootSiblingParent>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen
@@ -25,6 +27,7 @@ export default function Layout() {
           }}
         />
       </Stack>
+      </RootSiblingParent>
     </SafeAreaView>
   );
 }
