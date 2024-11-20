@@ -10,37 +10,12 @@ import React, { useEffect, useState } from "react";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import AdditionalText from "./AdditionalText";
 import { Audio } from "expo-av";
-import { useNavigation } from "expo-router";
-import { HeaderFavButton } from "./HeaderFavButton";
-import Toast from "react-native-root-toast";
+import { Link } from "expo-router";
 
 const Word = ({ words }) => {
   const [sound, setSound] = useState();
   const [error, setError] = useState();
   const [isSoundLoading, setIsSoundLoading] = useState({});
-  const [isFav, setIsFav] = useState(words.isFav)
-
-  const navigation = useNavigation();
-
-  const handleFav = () => {
-    const toastOptions = {
-      duration: 1000,
-      position: Toast.positions.BOTTOM,
-      delay: 0,
-      shadow: true,
-      animation: true,
-      hideOnPress: true,
-      backgroundColor: "#443777",
-      textColor: "#efedff",
-      opacity: 1,
-    };
-    const toastMsg = !isFav
-      ? `"${words[0].word}" added to Favorites!`
-      : `"${words[0].word}" removed from Favorites!`;
-    
-    Toast.show(toastMsg, toastOptions);
-    setIsFav((isFav) => !isFav);
-  };
 
   const pronounce = async (uri) => {
     setIsSoundLoading((prev) => ({ ...prev, [uri]: true }));
@@ -68,14 +43,6 @@ const Word = ({ words }) => {
       : undefined;
   }, [sound]);
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (        
-        <HeaderFavButton name={isFav ? "star" : "star-o"} onPress={handleFav} />
-      ),
-    });
-  }, [navigation, isFav])
-
   return (
     <ScrollView>
       {words.map((word, wordIndex, words) => {
@@ -100,6 +67,12 @@ const Word = ({ words }) => {
                   <Text style={styles.partOfSpeech}>
                     {meaning.partOfSpeech}
                   </Text>
+
+                  {index === 0 && word.wiki && (
+                    <Link href={word.wiki}>
+                      <FontAwesome5 name="wikipedia-w" style={styles.wiki} />
+                    </Link>
+                  )}
                 </View>
 
                 {index === 0 && (
@@ -158,6 +131,13 @@ const Word = ({ words }) => {
                       <Text style={styles.definition}>{`${index + 1}. ${
                         definition.definition
                       }`}</Text>
+
+                      {definition.example && (
+                        <Text style={styles.example}>
+                          {" "}
+                          - {definition.example}
+                        </Text>
+                      )}
 
                       {definition.synonyms.length > 0 && (
                         <AdditionalText
@@ -232,13 +212,21 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
   },
+  wiki: {
+    fontSize: 20,
+    color: "#f2f2f2",
+    backgroundColor: "#0b2057",
+    padding: 5,
+    paddingTop: 6,
+    borderRadius: 5,
+  },
   wordMeanings: {
     backgroundColor: "#443777",
     color: "#efedff",
     fontSize: 20,
     borderRadius: 8,
     paddingHorizontal: 10,
-    paddingVertical: 5,
+    paddingVertical: 4,
   },
   partOfSpeech: {
     fontStyle: "italic",
@@ -268,5 +256,11 @@ const styles = StyleSheet.create({
   },
   definition: {
     fontSize: 18,
+  },
+  example: {
+    fontStyle: "italic",
+    fontSize: 16,
+    marginTop: 5,
+    marginLeft: 5,
   },
 });
