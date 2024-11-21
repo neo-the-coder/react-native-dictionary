@@ -238,6 +238,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     columnGap: 5,
     marginTop: 5,
+    flexWrap: "wrap"
   },
   phoneticContainer: {
     flexDirection: "row",

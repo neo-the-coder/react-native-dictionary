@@ -109,7 +109,7 @@ const WordFetcher = ({ searchedWord }) => {
         };
         await AsyncStorage.setItem(
           "words",
-          JSON.stringify([...allWords, newWord])
+          JSON.stringify([newWord, ...allWords])
         );
         setWords({ data, isFav: false });
       } catch (error) {
