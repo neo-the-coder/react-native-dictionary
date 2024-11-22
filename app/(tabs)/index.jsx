@@ -4,9 +4,11 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import React, { useState } from "react";
 import WordFetcher from "../components/WordFetcher";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 
 const Search = () => {
   const [searchedWord, setSearchedWord] = useState("");
@@ -18,18 +20,28 @@ const Search = () => {
     setSearchedWord(trimmed);
   };
 
+  const clearInput = () => setInputText("");
+
   return (
     <View style={styles.container}>
-      <View style={styles.searchInputContainer}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search a word"
-          placeholderTextColor="#443777"
-          returnKeyType="search"
-          value={inputText}
-          onChangeText={setInputText}
-          onSubmitEditing={handleSearch}
-        />
+      <View style={styles.searchContainer}>
+        <View style={styles.searchInputContainer}>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search a word"
+            placeholderTextColor="#443777"
+            returnKeyType="search"
+            value={inputText}
+            onChangeText={setInputText}
+            onSubmitEditing={handleSearch}
+          />
+
+          {inputText && (
+            <Pressable style={styles.clearButton} onPress={clearInput}>
+              <FontAwesome5 name="times-circle" size={20} color="#0b2057" />
+            </Pressable>
+          )}
+        </View>
 
         <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
           <Text style={styles.searchButtonText}>Search</Text>
@@ -50,22 +62,26 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     backgroundColor: "#efedff",
   },
-  searchInputContainer: {
+  searchContainer: {
     flexDirection: "row",
     alignItems: "stretch",
     marginBottom: 10,
     minWidth: 250,
+  },
+  searchInputContainer: {
+    flex: 1,
   },
   searchInput: {
     borderWidth: 2,
     borderColor: "#0b2057",
     borderRadius: 5,
     paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingLeft: 15,
+    paddingRight: 45,
     fontSize: 18,
-    flex: 1,
     boxShadow: "0px 3px 5px rgba(0, 0, 0, 0.2)",
     color: "#0b2057",
+    position: "relative",
   },
   searchButton: {
     justifyContent: "center",
@@ -79,5 +95,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18,
     paddingHorizontal: 20,
+  },
+  clearButton: {
+    alignSelf: "center",
+    position: "absolute",
+    right: 15,
+    top: "50%",
+    transform: "translateY(-50%)",
   },
 });
