@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Word from "./Word";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
-  getToday,
+  getDateStr,
   getWordFromStorage,
   responseFiltering,
 } from "../../utils/helpers";
@@ -50,7 +50,7 @@ const WordFetcher = ({ searchedWord }) => {
         await AsyncStorage.setItem("words", JSON.stringify(allWords));
         setWords((words) => ({ ...words, isFav: !words.isFav }));
       } catch (error) {
-        console.log(error);
+        console.error(error);
         toastMsg = isFav
           ? `Failed to remove "${word}" from Favorites!`
           : `Failed to add "${word}" to Favorites!`;
@@ -74,19 +74,20 @@ const WordFetcher = ({ searchedWord }) => {
 
   useEffect(() => {
     const fetchDefinition = async () => {
-      setLoading(true);
       setError();
       try {
-        const today = getToday();
+        const now = new Date()
         // Try to get the word from the storage first
         let [currentWord, allWords] = await getWordFromStorage(wordToSearch);
         if (currentWord) {
           const { data, isFav, history } = currentWord;
-          // Add today to the history if missing
-          if (!history.includes(today)) {
-            history.unshift(today);
-            await AsyncStorage.setItem("words", JSON.stringify(allWords));
-          }
+          const todayStr = getDateStr(now);
+          const index = history.findIndex(date => getDateStr(new Date(date)) === todayStr);
+          // Add timestamp to the history if missing
+          if (index === -1) history.unshift(now.getTime())
+          // replace otherwise
+          else history[index] = now.getTime()
+          await AsyncStorage.setItem("words", JSON.stringify(allWords));
           setWords({ data, isFav });
           return;
         }
@@ -105,7 +106,7 @@ const WordFetcher = ({ searchedWord }) => {
         const newWord = {
           data,
           isFav: false,
-          history: [today],
+          history: [now.getTime()],
         };
         await AsyncStorage.setItem(
           "words",

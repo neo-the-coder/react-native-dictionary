@@ -14,7 +14,9 @@ const useFavoritesList = () => {
         const storedWordsJson = await AsyncStorage.getItem("words");
         const storedWords =
           storedWordsJson !== null ? JSON.parse(storedWordsJson) : [];
-        const favoriteWords = storedWords.filter((word) => word.isFav);
+        const favoriteWords = storedWords
+          .filter((word) => word.isFav)
+          .sort((a, b) => b.history[0] - a.history[0]);
         setFavorites(favoriteWords);
       } catch (error) {
         console.error("Failed to load favorites from AsyncStorage", error);

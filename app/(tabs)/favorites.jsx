@@ -23,7 +23,7 @@ const Favorites = () => {
           data={favorites}
           renderItem={({ item }) => <ListItem words={item} />}
           keyExtractor={(item) => item.data[0].word}
-          ItemSeparatorComponent={<View style={styles.separator}></View>}
+          ItemSeparatorComponent={<View style={styles.separator} />}
         />
       ) : (
         <Notification text={text} />
