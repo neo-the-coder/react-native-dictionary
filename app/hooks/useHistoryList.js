@@ -10,6 +10,7 @@ const useHistoryList = () => {
 
   const cachedfetchHistory = useCallback(() => {
     async function fetchHistory() {
+      setLoading(true)
       setError(null);
       try {
         const storedWordsJson = await AsyncStorage.getItem("words");

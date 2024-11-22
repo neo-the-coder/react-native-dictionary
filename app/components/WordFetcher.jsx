@@ -61,6 +61,10 @@ const WordFetcher = ({ searchedWord }) => {
     };
 
     navigation.setOptions({
+      headerTitle: (loading || error) ? '' : words?.data?.[0].word,
+      headerTitleStyle: {
+        textTransform: "capitalize",
+      },
       headerRight: () =>
         !loading &&
         !error && (
@@ -74,6 +78,7 @@ const WordFetcher = ({ searchedWord }) => {
 
   useEffect(() => {
     const fetchDefinition = async () => {
+      setLoading(true)
       setError();
       try {
         const now = new Date()

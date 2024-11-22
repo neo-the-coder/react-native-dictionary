@@ -29,7 +29,7 @@ const Word = ({ words }) => {
       await sound.playAsync();
     } catch (error) {
       setError(error);
-      console.log("Error occured:", error);
+      console.error("Error occured:", error);
     } finally {
       setIsSoundLoading((prev) => ({ ...prev, [uri]: false }));
     }
@@ -45,7 +45,7 @@ const Word = ({ words }) => {
 
   return (
     <ScrollView>
-      {words.map((word, wordIndex, words) => {
+      {words?.map((word, wordIndex, words) => {
         return (
           <View key={wordIndex} style={styles.container}>
             {word.meanings.map((meaning, index, meanings) => (
@@ -179,11 +179,11 @@ const styles = StyleSheet.create({
   container: {},
   error: {
     color: "red",
-    backgroundColor: "#44377722",
-    fontWeight: "bold",
-    paddingVertical: 3,
+    backgroundColor: "#ff000022",
+    fontSize: 15,
+    paddingVertical: 4,
     paddingHorizontal: 6,
-    marginTop: 5,
+    marginTop: 8,
     borderRadius: 5,
     alignSelf: "flex-start",
   },

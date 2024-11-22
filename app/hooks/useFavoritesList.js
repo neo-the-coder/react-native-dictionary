@@ -9,6 +9,7 @@ const useFavoritesList = () => {
 
   const cachedfetchFavorites = useCallback(() => {
     async function fetchFavorites() {
+      setLoading(true)
       setError(null);
       try {
         const storedWordsJson = await AsyncStorage.getItem("words");

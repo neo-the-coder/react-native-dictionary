@@ -1,12 +1,8 @@
-import { useGlobalSearchParams } from "expo-router";
 import { Stack } from "expo-router/stack";
 import { SafeAreaView } from "react-native";
 import { RootSiblingParent } from "react-native-root-siblings";
 
 export default function Layout() {
-  let { searchedWord = "word definition" } = useGlobalSearchParams();
-  searchedWord = searchedWord[0].toUpperCase() + searchedWord.slice(1);
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <RootSiblingParent>
@@ -15,7 +11,7 @@ export default function Layout() {
           <Stack.Screen
             name="details"
             options={{
-              title: searchedWord,
+              title: "",
               headerTitleAlign: "center",
               headerStyle: {
                 backgroundColor: "#efedff",
