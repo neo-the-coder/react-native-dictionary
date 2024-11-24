@@ -31,7 +31,7 @@ const WordFetcher = ({ searchedWord }) => {
       } = words;
       const toastOptions = {
         duration: 1000,
-        position: Toast.positions.BOTTOM,
+        position: -70,
         delay: 0,
         shadow: true,
         animation: true,

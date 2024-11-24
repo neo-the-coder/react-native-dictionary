@@ -20,6 +20,8 @@ export default function TabLayout() {
         tabBarInactiveTintColor: "#8e8e8e",
         tabBarInactiveBackgroundColor: "#efedff",
         tabBarStyle: { borderTopColor: "#0b2057" },
+        tabBarAllowFontScaling : false,
+        tabBarLabelPosition: "beside-icon"
       }}
     >
       <Tabs.Screen
@@ -34,7 +36,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Search Dictionary",
+          title: "🇬🇧 DICTIONARY",
           tabBarLabel: "Search",
           tabBarIcon: ({ color }) => <TabBarIcon name="book" color={color} />,
         }}

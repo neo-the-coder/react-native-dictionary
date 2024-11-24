@@ -32,7 +32,7 @@ const Search = () => {
     searchedWord &&
       navigation.setOptions({
         headerLeft: () => (
-          <Text style={styles.headerLeft}>Search Dictionary</Text>
+          <Text style={styles.headerLeft}>Search</Text>
         ),
       });
   }, [searchedWord]);
@@ -50,6 +50,7 @@ const Search = () => {
             value={inputText}
             onChangeText={setInputText}
             onSubmitEditing={handleSearch}
+            allowFontScaling={false}
           />
 
           {inputText && (
@@ -74,7 +75,6 @@ export default Search;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
     paddingVertical: 15,
     backgroundColor: "#efedff",
   },
@@ -82,10 +82,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "stretch",
     marginBottom: 10,
+    paddingHorizontal: 20,
     minWidth: 250,
   },
   searchInputContainer: {
     flex: 1,
+    justifyContent: 'center',
   },
   searchInput: {
     borderWidth: 2,
@@ -97,6 +99,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     boxShadow: "0px 3px 5px rgba(0, 0, 0, 0.2)",
     color: "#0b2057",
+    backgroundColor: '#efedff',
     position: "relative",
   },
   searchButton: {
@@ -113,14 +116,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   clearButton: {
-    alignSelf: "center",
     position: "absolute",
     right: 15,
-    top: "50%",
-    transform: "translateY(-50%)",
+    alignSelf: "flex-end",
+    backgroundColor: '#efedff',
   },
   headerLeft: {
-    fontWeight: 500,
+    fontWeight: 'semibold',
     fontSize: 18,
     paddingHorizontal: 20,
   },

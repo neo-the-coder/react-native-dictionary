@@ -69,7 +69,7 @@ const Word = ({ words }) => {
                   </Text>
 
                   {index === 0 && word.wiki && (
-                    <Link href={word.wiki}>
+                    <Link href={word.wiki} style={styles.wikiContainer}>
                       <FontAwesome5 name="wikipedia-w" style={styles.wiki} />
                     </Link>
                   )}
@@ -176,7 +176,9 @@ const Word = ({ words }) => {
 export default Word;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    paddingHorizontal: 20,
+  },
   error: {
     color: "red",
     backgroundColor: "#ff000022",
@@ -212,13 +214,15 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
   },
+  wikiContainer: {
+    backgroundColor: "#0b2057",
+    padding: 5,
+    paddingTop: 7,
+    borderRadius: 7,
+  },
   wiki: {
     fontSize: 20,
     color: "#f2f2f2",
-    backgroundColor: "#0b2057",
-    padding: 5,
-    paddingTop: 6,
-    borderRadius: 5,
   },
   wordMeanings: {
     backgroundColor: "#443777",
