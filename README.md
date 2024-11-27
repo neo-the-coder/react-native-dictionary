@@ -2,7 +2,7 @@
 
 English dictionary with history of searched words and a feature of adding selected words to your favorites!
 
-![](https://github.com/neo-the-coder/react-native-dictionary/blob/master/dictionary.gif)
+<img src="/dictionary.gif" width="350" alt="Dictionary app presentation"/>
 
 # Welcome to your Expo app 👋
 
