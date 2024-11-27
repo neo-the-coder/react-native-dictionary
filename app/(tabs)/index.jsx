@@ -6,16 +6,14 @@ import {
   TouchableOpacity,
   Pressable,
 } from "react-native";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import WordFetcher from "../components/WordFetcher";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-import { useNavigation } from "expo-router";
 
 const Search = () => {
   const [searchedWord, setSearchedWord] = useState("");
   const [inputText, setInputText] = useState("");
   const inputRef = useRef(null);
-  const navigation = useNavigation();
 
   const handleSearch = () => {
     const trimmed = inputText.trim();
@@ -27,15 +25,6 @@ const Search = () => {
     setInputText("");
     inputRef.current.focus();
   };
-
-  useEffect(() => {
-    searchedWord &&
-      navigation.setOptions({
-        headerLeft: () => (
-          <Text style={styles.headerLeft}>Search</Text>
-        ),
-      });
-  }, [searchedWord]);
 
   return (
     <View style={styles.container}>
@@ -120,10 +109,5 @@ const styles = StyleSheet.create({
     right: 15,
     alignSelf: "flex-end",
     backgroundColor: '#efedff',
-  },
-  headerLeft: {
-    fontWeight: 'semibold',
-    fontSize: 18,
-    paddingHorizontal: 20,
   },
 });

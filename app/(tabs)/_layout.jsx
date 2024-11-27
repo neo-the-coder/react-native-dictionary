@@ -1,5 +1,6 @@
 import { Tabs } from "expo-router";
 import { TabBarIcon } from "../components/TabBarIcon";
+import About from "../components/About";
 
 export default function TabLayout() {
   return (
@@ -39,6 +40,7 @@ export default function TabLayout() {
           title: "🇬🇧 DICTIONARY",
           tabBarLabel: "Search",
           tabBarIcon: ({ color }) => <TabBarIcon name="book" color={color} />,
+          headerLeft: () => <About />
         }}
       />
       <Tabs.Screen

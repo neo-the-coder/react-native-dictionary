@@ -6,7 +6,7 @@ export default function Layout() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <RootSiblingParent>
-        <Stack>
+        <Stack screenOptions={{ contentStyle: { backgroundColor: "#efedff" } }}>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen
             name="details"
